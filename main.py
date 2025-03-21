@@ -24,14 +24,28 @@ def main():
     screen = init_game()
     clock = pygame.time.Clock()
     running = True
+
+    # Images
+    backround_image = pygame.image.load("space.jpg").convert()
+    player_image = pygame.image.load("ship.png").convert()
+    player_image.set_colorkey((0,0,0))
+
     while running:
         running = handle_events()
-        screen.fill(config.WHITE)
+        # screen.fill(config.WHITE) - Instead of a white backround!
+        screen.blit(backround_image, (0, 0)) # Spaaaaaaaaaaaaceee!
+
+        player_data = {
+            'x' : pygame.mouse.get_pos()[0] - (player_image.get_width()/2),
+            'y' : pygame.mouse.get_pos()[1] - (player_image.get_height()/2)
+        }
+        screen.blit(player_image, (player_data['x'], player_data['y']))
         pygame.display.flip()
 
         # Limit clock to FPS
         clock.tick(config.FPS)
     pygame.quit()
     sys.exit()
+
 if __name__ == '__main__':
     main()
